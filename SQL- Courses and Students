@@ -1,0 +1,154 @@
+- Here is a code I wrote during my Master's program for a data set that contained information on courses and students -
+- This is the code for the tables -
+/*
+SELECT * FROM dbo.tb_HWCourse
+SELECT * FROM dbo.tb_HWDepartment
+SELECT * FROM dbo.tb_HWEmployee
+SELECT * FROM dbo.tb_HWEnrolled
+SELECT * FROM dbo.tb_HWStudent
+
+SELECT * FROM dbo.Show s
+SELECT * FROM dbo.Director d
+SELECT * FROM dbo.Genre g
+SELECT * FROM dbo.ShowAward sa
+SELECT * FROM dbo.Award aw
+SELECT * FROM dbo.Role r
+SELECT * FROM dbo.Actor a
+SELECT * FROM dbo.Platform p
+SELECT * FROM dbo.Viewer v
+SELECT * FROM dbo.Viewing vw
+
+
+*/ 
+
+-- Part 1:
+-- Write the SQL to answer these questions EXACTLY.
+
+-- Q1.
+-- List each course Code,
+-- along with how many (the count of) students are enrolled in each course.
+-- Order by CourseCode
+SELECT c.coursecode, COUNT(en.sid) AS numberofstudent
+FROM tb_HWCourse c 
+LEFT OUTER JOIN tb_HWEnrolled en ON en.cid = c.cid
+GROUP BY c.CourseCode
+ORDER BY c.CourseCode
+
+
+
+
+-- Q2.
+-- List each course Code and Course ID,
+-- along with how many students are enrolled in each course.
+-- Only include those courses that have a count less than or equal to two (2),
+-- as well as any course that has no enrollment (display zero (0) for those).
+-- Order by CourseCode
+
+SELECT c.CID, c.coursecode, COUNT(en.sid) AS numberofstudent
+FROM tb_HWCourse c 
+LEFT OUTER JOIN tb_HWEnrolled en ON en.cid = c.CID
+GROUP BY c.CourseCode, c.CID
+HAVING COUNT(en.sid) <= 2
+ORDER BY c.CourseCode
+
+
+
+
+-- Q3.
+-- List the current age and DOB for each student.
+-- (make sure to include their names, too, obviously)
+-- Order by the student's age, oldest first
+-- HINT: Use GETDATE() to get the current date and time.
+-- HINT2: Specifically, this will get the (approximate) age:
+-- (DATEDIFF(dd, S.DOB, GETDATE()) / 365)
+
+SELECT s.FirstName, s.LastName, s.DOB, (DATEDIFF(dd, S.DOB, GETDATE()) / 365) as CurrentAge
+FROM tb_HWStudent s 
+ORDER BY CurrentAge DESC
+
+
+
+-- Q4.
+-- List the average age of the students for each course,
+-- as well as the number of students enrolled in the course.
+-- Be sure to list the CourseCode, the NumStudents, and the AvgAge.
+-- If a course has no enrollment, be sure to show zero (0) for both.
+-- Order by the average age, oldest of the average first.
+SELECT c.CourseCode, ISNULL(AVG((DATEDIFF(dd, s.DOB, GETDATE()) / 365)),0) AS AvgAge, COUNT(en.SID) AS numberofstudents
+FROM tb_HWCourse c
+LEFT OUTER JOIN tb_HWEnrolled en ON c.CID = en.CID
+LEFT OUTER JOIN tb_HWStudent s ON en.SID = s.SID 
+GROUP BY c.CourseCode
+ORDER BY AvgAge DESC
+
+
+-- Q5.
+-- List all Course records, along with all information on who teaches the course
+-- that teach anything having to do with Brontosaurus.
+-- Be sure to check both the Code and Description fields.
+-- Hint: Use the wild card % to do your search
+-- Order by CourseCode (reversed)
+
+SELECT c.CID, c.CourseCode, c.CourseDescription, c.InstructorEID, e.FirstName, e.LastName, e.DID
+FROM tb_HWCourse c
+LEFT OUTER JOIN tb_HWEmployee e ON c.InstructorEID = E.EID
+WHERE c.CourseCode LIKE '%brontosaurus%' OR c.CourseDescription LIKE '%brontosaurus%'
+ORDER BY c.CourseCode DESC
+
+-- ====================================================================================
+-- Part 2:
+-- Write the SQL to answer these questions EXACTLY.
+-- No repeats from previous answers.
+-- ====================================================================================
+
+
+-- Q6.
+--List all the actors and the total earned in all their roles
+--Do this for only actors with an "i" in the first name
+--Order by lowest salary
+SELECT a.ActorID, a.FirstName, a.LastName, SUM(r.Salary) AS SalaryPaid
+FROM dbo.Actor a
+LEFT OUTER JOIN dbo.Role r ON r.ActorID = a.ActorID
+WHERE a.FirstName LIKE '%i%' 
+GROUP BY a.ActorID, a.FirstName, a.LastName
+ORDER BY SalaryPaid
+
+
+-- Q7.
+-- List how old the movie is
+-- Order by the date released, oldest first
+SELECT s.Title, s.DateReleased, (DATEDIFF(dd, s.DateReleased, GETDATE()) / 365) as MovieAge
+FROM dbo.Show s
+ORDER BY MovieAge DESC
+
+-- Q8.
+-- List the average IMDB Rating for each show, as well as the directors name
+-- Only for those shows who were made a Movie
+-- Be sure to list the descripition and show title
+-- Order by the average rating
+SELECT s.ShowID, s.Title, s.Description, s.IsMovie, AVG(IMDBRating) AS AvgRating, d.FirstName, d.LastName
+FROM dbo.Show s
+LEFT OUTER JOIN dbo.Director d ON d.DirectorID = s.DirectorID
+WHERE s.IsMovie = 1
+GROUP BY s.ShowID, s.Title, s.Description, s.IsMovie, d.FirstName, d.LastName
+ORDER BY AvgRating 
+
+-- Q9.
+--List all the shows and the total earned in Box Office Earnings
+--Do this for only the shows having to do anything with "Friends"
+--Order by highest earnings
+SELECT s.ShowID, s.Title, s.Description, s.BoxOfficeEarnings
+FROM dbo.Show s
+WHERE s.Title LIKE '%Friends%' OR s.Description LIKE '%Friends%'
+ORDER BY s.BoxOfficeEarnings DESC
+
+-- Q10.
+-- List the actors total salary for each role 
+-- Do this for only actors with a salary higher than 700,000 and is a Male
+-- Order by total salary
+SELECT a.FirstName, a.LastName, r.CharacterName, a.Gender, SUM(r.Salary) AS TotalSalary
+FROM dbo.Actor a
+LEFT OUTER JOIN dbo.Role r ON r.ActorID = a.ActorID
+WHERE r.Salary > '700000' AND a.Gender = 'M'
+GROUP BY a.FirstName, a.LastName, r.CharacterName, a.Gender
+ORDER BY TotalSalary
