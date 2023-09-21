@@ -1,5 +1,5 @@
-- Here is a code I wrote during my Master's program for a data set that contained information on courses and students -
-- This is the code for the tables -
+--- Downloaded Data and Answered Questions concerning it
+--- This is the code for the tables -
 /*
 SELECT * FROM dbo.tb_HWCourse
 SELECT * FROM dbo.tb_HWDepartment
@@ -20,9 +20,6 @@ SELECT * FROM dbo.Viewing vw
 
 
 */ 
-
--- Part 1:
--- Write the SQL to answer these questions EXACTLY.
 
 -- Q1.
 -- List each course Code,
