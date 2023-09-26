@@ -1,4 +1,5 @@
--- I used a Spotify Kaggle dataset to see what songs and artist have been dominating the charts. I ran my code using BigQuery.--
+-- I used Spotify data from Kaggle to see what songs and artist have been dominating the charts. 
+#I performed my analysis using SQL in BigQuery.
 
 /*Top 10 streamed songs in 2023*/
 SELECT
