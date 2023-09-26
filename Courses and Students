@@ -1,4 +1,4 @@
---- Downloaded Data and Answered Questions concerning it
+--- Downloaded Data from previously created tables and used it to analyze further---
 --- This is the code for the tables -
 /*
 SELECT * FROM dbo.tb_HWCourse
