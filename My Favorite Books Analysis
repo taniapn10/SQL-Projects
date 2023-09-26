@@ -1,0 +1,35 @@
+--Here I am creating a table for my favorite books. I used Azure Studio to run my data--
+
+DROP TABLE IF EXISTS books
+
+-- Create Books table-- 
+CREATE TABLE books ( 
+     Book_ID     INT NOT NULL,
+     Book_Name VARCHAR(85), 
+     Publisher  VARCHAR(80), 
+     Author     VARCHAR(40),  
+     Edition        CHAR(15), 
+     Price     CHAR(15), 
+     ISBN        CHAR(15), 
+     PRIMARY KEY (Book_ID) 
+  );
+
+
+--Insert into Books table--
+INSERT INTO Books (Book_id, Book_Name, Publisher, Author, Edition, Price, ISBN) VALUES ('1', 'Harry Potter and the Goblet of Fire', 'Bloomsburry', 'J.K Rowling', '1', '11', '074754624X');
+INSERT INTO Books (Book_id, Book_Name, Publisher, Author, Edition, Price, ISBN) VALUES ('2', 'Eclipse', 'Brown Little', 'Stephanie Meyer', '1', '17', '9780316160209');
+INSERT INTO Books (Book_id, Book_Name, Publisher, Author, Edition, Price, ISBN) VALUES ('3', 'Spy x Family Vol. 4', 'Shueisha', 'Tatsuya Endo', '4', '9', '9780316160209');
+INSERT INTO Books (Book_id, Book_Name, Publisher, Author, Edition, Price, ISBN) VALUES ('4', 'Boundaries, When to Say Yes How to Say No to Take Control of your Life', 'Brown Little', 'Henry Cloud', '2', '12', '9780310351801');
+
+
+SELECT * FROM dbo.books
+
+/*My all time favorite book from the list*/ 
+SELECT *
+FROM dbo.books
+WHERE Book_ID = 1 ;
+
+/*List books by latest edition to oldest edition*/
+SELECT Book_Name, Edition
+FROM dbo.books
+ORDER BY Edition DESC;
