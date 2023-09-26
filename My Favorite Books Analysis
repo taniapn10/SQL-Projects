@@ -1,4 +1,4 @@
---Here I am creating a table for my favorite books. I used Azure Studio to run my data--
+--Here I am creating a table for my all time favorite books. I used Azure Studio to run my data using SQL.--
 
 DROP TABLE IF EXISTS books
 
@@ -15,12 +15,13 @@ CREATE TABLE books (
   );
 
 
---Insert into Books table--
+--Insert data into Books table--
 INSERT INTO Books (Book_id, Book_Name, Publisher, Author, Edition, Price, ISBN) VALUES ('1', 'Harry Potter and the Goblet of Fire', 'Bloomsburry', 'J.K Rowling', '1', '11', '074754624X');
 INSERT INTO Books (Book_id, Book_Name, Publisher, Author, Edition, Price, ISBN) VALUES ('2', 'Eclipse', 'Brown Little', 'Stephanie Meyer', '1', '17', '9780316160209');
 INSERT INTO Books (Book_id, Book_Name, Publisher, Author, Edition, Price, ISBN) VALUES ('3', 'Spy x Family Vol. 4', 'Shueisha', 'Tatsuya Endo', '4', '9', '9780316160209');
 INSERT INTO Books (Book_id, Book_Name, Publisher, Author, Edition, Price, ISBN) VALUES ('4', 'Boundaries, When to Say Yes How to Say No to Take Control of your Life', 'Brown Little', 'Henry Cloud', '2', '12', '9780310351801');
 
+#Run my new table 
 
 SELECT * FROM dbo.books
 
