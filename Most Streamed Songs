@@ -1,0 +1,43 @@
+-- I used a Spotify Kaggle dataset to see what songs and artist have been dominating the charts. I ran my code using BigQuery.--
+
+/*Top 10 streamed songs in 2023*/
+SELECT
+  track_name, 
+  artist_s__name, 
+  streams, 
+  released_year
+FROM spotify_charts.spotify_data 
+WHERE released_year = 2023
+ORDER BY streams DESC 
+LIMIT 10 ;
+
+/* Top 15 songs streamed between the years 2019 to 2023*/
+SELECT
+  track_name, 
+  artist_s__name, 
+  streams, 
+  released_year
+FROM spotify_charts.spotify_data 
+WHERE released_year IN (2019, 2020, 2021, 2022, 2023)
+ORDER BY streams DESC 
+LIMIT 15 ;
+
+/*Which artist keeps appearing in the charts?*/
+SELECT artist_s__name, COUNT(*) as chart_appearances
+FROM spotify_charts.spotify_data
+GROUP BY artist_s__name
+ORDER BY chart_appearances DESC;
+
+/* Which artist dominated the charts in 2022?*/
+SELECT artist_s__name, COUNT(*) as chart_appearances
+FROM `sql-practice-400201.spotify_charts.spotify_data`
+WHERE released_year = 2022
+GROUP BY artist_s__name
+ORDER BY chart_appearances DESC
+LIMIT 1;
+
+/*The top 5 artists who have appeared in the charts the most in multiple platforms for 2023 so far?*/
+SELECT artist_s__name, COUNT(*) as chart_appearances
+FROM `sql-practice-400201.spotify_charts.spotify_data`
+WHERE released_year = 2023
+GROUP BY artist_s__name 
