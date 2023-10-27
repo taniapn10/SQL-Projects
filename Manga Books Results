@@ -1,0 +1,78 @@
+--Here I created a table with information on different Manga Books. I then analyzed the data using different SELECT queries.--
+
+CREATE TABLE MangaBooks (
+    MangaID INT PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    Author VARCHAR(255),
+    Genre VARCHAR(100),
+    Volume INT,
+    ReleaseYear INT,
+    Price DECIMAL(10, 2)
+);
+
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (1, 'Naruto', 'Masashi Kishimoto', 'Action', 72, 2005, 9.99);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (2, 'One Piece', 'Eiichiro Oda', 'Adventure', 104, 1997, 8.99);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (3, 'Attack on Titan', 'Hajime Isayama', 'Dark Fantasy', 34, 2009, 7.99);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (4, 'My Hero Academia', 'Kohei Horikoshi', 'Superhero', 36, 2014, 6.99) ;
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (5, 'Death Note', 'Tsugumi Ohba', 'Mystery', 12, 2003, 5.99);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (6, 'Dragon Ball', 'Akira Toriyama', 'Adventure', 42, 1984, 7.49);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (7, 'Bleach', 'Tite Kubo', 'Supernatural', 74, 2001, 6.99);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (8, 'Fullmetal Alchemist', 'Hiromu Arakawa', 'Fantasy', 27, 2001, 8.99);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (9, 'One Punch Man', 'ONE', 'Action', 23, 2009, 6.49);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (10, 'Tokyo Ghoul', 'Sui Ishida', 'Horror', 14, 2011, 6.99);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (11, 'Attack on Titan: Junior High', 'Saki Nakagawa', 'Comedy', 4, 2012, 5.99);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (12, 'My Youth Romantic Comedy Is Wrong, As I Expected', 'Wataru Watari', 'Romance', 14, 2011, 7.49);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (13, 'The Promised Neverland', 'Kaiu Shirai', 'Mystery', 20, 2016, 8.99);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (14, 'Demon Slayer: Kimetsu no Yaiba', 'Koyoharu Gotouge', 'Action', 23, 2016, 9.49);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (15, 'Hunter x Hunter', 'Yoshihiro Togashi', 'Adventure', 36, 1998, 7.99);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (16, 'One Piece: Strong World', 'Eiichiro Oda', 'Adventure', 1, 2009, 4.99);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (17, 'Black Clover', 'Yūki Tabata', 'Fantasy', 30, 2015, 6.49);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (18, 'Fruits Basket', 'Natsuki Takaya', 'Romance', 23, 1998, 6.99);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (19, 'Nanatsu no Taizai (The Seven Deadly Sins)', 'Nakaba Suzuki', 'Fantasy', 41, 2012, 7.49);
+INSERT INTO MangaBooks (MangaID, Title, Author, Genre, Volume, ReleaseYear, Price) VALUES (20, 'Spy x Family', 'Tatsuya Endo', 'Action', 6, 2019, 7.99);
+
+
+
+SELECT * FROM MangaBooks;
+
+SELECT AVG(Price) AS Avg_price
+FROM MangaBooks ;
+
+--What are average, max, and min price of a book?--
+SELECT
+    AVG(Price) AS AveragePrice,
+    MAX(Price) AS MaxPrice,
+    MIN(Price) AS MinPrice
+FROM MangaBooks;
+
+-- Books that came out before 2000. Order by highest Price-- 
+SELECT Title, ReleaseYear, Price
+FROM MangaBooks
+WHERE ReleaseYear <= 2000 
+ORDER BY Price DESC ;
+
+--Average price per genre and filter by average price over $7.00--
+SELECT
+    Genre,
+    AVG(Price) AS AveragePrice
+FROM MangaBooks
+GROUP BY Genre
+HAVING AVG(Price) > 7.00;
+
+--Use CASE to group--
+SELECT
+    CASE
+        WHEN ReleaseYear BETWEEN 1990 AND 1999 THEN '90s'
+        WHEN ReleaseYear BETWEEN 2000 AND 2009 THEN '00s'
+        WHEN ReleaseYear BETWEEN 2010 AND 2019 THEN '10s'
+        WHEN ReleaseYear BETWEEN 2020 AND 2029 THEN '20s'
+        ELSE 'Other'
+    END AS ReleaseDecade,
+    COUNT(*) AS BooksCount
+FROM MangaBooks
+GROUP BY ReleaseDecade;
+
+--Filter books by genre and author. This is also my favorite book!--
+SELECT *
+FROM MangaBooks
+WHERE (Genre = 'Action' AND (Author = 'Tatsuya Endo' OR Volume = 6));
