@@ -30,7 +30,7 @@ SELECT * FROM store
 WHERE price > 4 ;
 
 --Retrieve products by type--
-SELECT * FROM Store WHERE item = 'Cupcakes';
+SELECT * FROM Store WHERE item = 'Cupcake';
 SELECT * FROM Store WHERE item = 'Brownies';
 SELECT * FROM Store WHERE item = 'Cookies';
 
