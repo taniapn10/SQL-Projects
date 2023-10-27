@@ -1,0 +1,39 @@
+#Here I created a store database using SQL. Table should have at least 5 columns and sell at least 15 items.
+
+CREATE TABLE store (item_id INTEGER PRIMARY KEY, flavor TEXT, item TEXT, price INTEGER, gluten_free Text );
+
+INSERT INTO store VALUES (1, "Oreo","Cookies", 4, "Yes");
+INSERT INTO store VALUES (2, "Snickerdoodle","Cookies", 3, "Yes");
+INSERT INTO store VALUES (3, "Oatmeal","Cookies", 3, "No");
+INSERT INTO store VALUES (4, "Pumpkin Spice","Cookies", 4, "Yes");
+INSERT INTO store VALUES (5, "Chocolate Chip","Cookies", 3, "Yes");
+INSERT INTO store VALUES (6, "Semi-Sweet Salted","Cookies", 3, "Yes");
+INSERT INTO store VALUES (7, "Nuts", "Brownies", 5, "No");
+INSERT INTO store VALUES (8, "Fudge", "Brownies", 4, "No");
+INSERT INTO store VALUES (9, "Salted Caramel", "Cupcake", 2, "No");
+INSERT INTO store VALUES (11, "Vanilla", "Cupcake", 3, "Yes");
+INSERT INTO store VALUES (12, "Peanut Butter", "Cupcake", 3, "No");
+INSERT INTO store VALUES (13, "Butter Pecan", "Cupcake", 7, "No");
+INSERT INTO store VALUES (14, "Dipped Strawberry", "Cupcake", 6, "No");
+INSERT INTO store VALUES (15, "Tres Leches", "Cupcake", 8, "No");
+
+--Run Query to show table created--
+SELECT * FROM store;
+
+--Show items that cost less than $5 and order by highest to lowest price-- 
+SELECT * FROM store 
+WHERE price < 5
+ORDER BY price DESC ;
+
+--Show items that cost more than $4--
+SELECT * FROM store
+WHERE price > 4 ;
+
+--Retrieve products by type--
+SELECT * FROM Store WHERE item = 'Cupcakes';
+SELECT * FROM Store WHERE item = 'Brownies';
+SELECT * FROM Store WHERE item = 'Cookies';
+
+--Search for item by flavor--
+SELECT * FROM Store
+WHERE flavor LIKE 'Tres Leches';
