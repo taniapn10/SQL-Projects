@@ -1,5 +1,5 @@
 --- Downloaded Data from previously created tables and used it to analyze further---
---- I used SQL to run all my data in Azure Data Studio.---
+--- I ran all my data in Azure Data Studio.---
 /*
 SELECT * FROM dbo.tb_HWCourse
 SELECT * FROM dbo.tb_HWDepartment
