@@ -1,0 +1,91 @@
+/* Created a project on famous people. Then created different tables related to their activites. */
+
+CREATE TABLE people (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    occupation TEXT,
+    birthplace TEXT,
+    birth_year INTEGER
+);
+
+INSERT INTO people (name, occupation, birthplace, birth_year) VALUES 
+    ('Tom Hanks', 'Actor', 'Concord, California', 1956),
+    ('Beyoncé', 'Singer', 'Houston, Texas', 1981),
+    ('J.K. Rowling', 'Author', 'Yate, United Kingdom', 1965),
+    ('Leonardo DiCaprio', 'Actor', 'Los Angeles, California', 1974),
+    ('Adele', 'Singer', 'Tottenham, London', 1988),
+    ('Stephen King', 'Author', 'Portland, Maine', 1947),
+    ('Angelina Jolie', 'Actor', 'Los Angeles, California', 1975),
+    ('Ed Sheeran', 'Singer', 'Halifax, United Kingdom', 1991),
+    ('George R.R. Martin', 'Author', 'Bayonne, New Jersey', 1948),
+    ('Robert Downey Jr.', 'Actor', 'New York City, New York', 1965),
+    ('Taylor Swift', 'Singer', 'Reading, Pennsylvania', 1989),
+    ('Jane Austen', 'Author', 'Steventon, United Kingdom', 1775),
+    ('Meryl Streep', 'Actor', 'Summit, New Jersey', 1949),
+    ('Elvis Presley', 'Singer', 'Tupelo, Mississippi', 1935),
+    ('Agatha Christie', 'Author', 'Torquay, United Kingdom', 1890);
+    
+    CREATE TABLE movies (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    release_year INTEGER,
+    lead_actor_id INTEGER,
+    FOREIGN KEY (lead_actor_id) REFERENCES people(id)
+);
+
+INSERT INTO movies (title, release_year, lead_actor_id) VALUES 
+    ('Forrest Gump', 1994, 1),
+    ('Titanic', 1997, 4),
+    ('Iron Man', 2008, 9),
+    ('The Devil Wears Prada', 2006, 13);
+    
+    CREATE TABLE songs (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    release_year INTEGER,
+    singer_id INTEGER,
+    FOREIGN KEY (singer_id) REFERENCES people(id)
+);
+
+INSERT INTO songs (title, release_year, singer_id) VALUES 
+    ('Halo', 2008, 2),
+    ('Someone Like You', 2011, 5),
+    ('Shape of You', 2017, 8),
+    ('Love Story', 2008, 11);
+    
+    CREATE TABLE books (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    publication_year INTEGER,
+    author_id INTEGER,
+    FOREIGN KEY (author_id) REFERENCES people(id)
+);
+
+INSERT INTO books (title, publication_year, author_id) VALUES 
+    ('Harry Potter and the Philosopher''s Stone', 1997, 3),
+    ('The Shining', 1977, 6),
+    ('Pride and Prejudice', 1813, 12),
+    ('Game of Thrones', 1996, 9);
+    
+/*Show all movies by lead actor*/
+SELECT movies.title, people.name AS lead_actor
+FROM movies
+JOIN people ON movies.lead_actor_id = people.id;
+
+/*Movies starting Tom Hanks*/
+SELECT movies.title
+FROM movies
+JOIN people ON movies.lead_actor_id = people.id
+WHERE people.name = 'Tom Hanks';
+
+/*Books written by J.K. Rowling*/
+SELECT books.title
+FROM books
+JOIN people ON books.author_id = people.id
+WHERE people.name = 'J.K. Rowling';
+
+/*Do actors only start in movies or do they sing as well?*/
+SELECT people.name AS actor, movies.title AS movie, songs.title AS song
+FROM people
+LEFT JOIN movies ON people.id = movies.lead_actor_id
+LEFT JOIN songs ON people.id = songs.singer_id;
